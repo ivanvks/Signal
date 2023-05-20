@@ -1,24 +1,30 @@
-#ifndef CONNECTDATABASE_H
-#define CONNECTDATABASE_H
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
 
-#include <QObject>
+#include <QMainWindow>
+#include <QLineEdit>
+#include <QTabWidget>
+#include <QPushButton>
+#include <QLabel>
+#include "connectdatabase.h"
+#include "configwindow.h"
 
-class ConnectDatabase : public QObject
+class MainWindow : public QMainWindow
 {
     Q_OBJECT
+
 public:
-    explicit ConnectDatabase(QObject *parent = nullptr);
+    MainWindow(QWidget *parent = nullptr);
 
-signals:
+private slots:
+    void openNewWindow();
+    void updateDatabaseConnectionStatus(bool connected);
+    void updateConnection(); // Новый слот для сохранения настроек
+private:
+    QTabWidget *tabWidget;
+    QPushButton *button;
+    QLabel* connectionStatusIcon;
+    ConnectDatabase *connectDatabase;
 
-    void databaseConnected(bool connected);
-
-    public slots:
-        void checkDatabaseConnection();
-
-    private:
-        bool connectToDatabase(const QString &host, int port, const QString &databaseName,
-                               const QString &userName, const QString &password);
-    };
-
-    #endif // CONNECTDATABASE_H
+};
+#endif // MAINWINDOW_H
